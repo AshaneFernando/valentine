@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be My Valentine?</title>
+
+<style>
+body {
+  text-align: center;
+  font-family: Arial;
+  margin-top: 80px;
+  background: #ffe6f0;
+}
+
+h1 {
+  font-size: 28px;
+}
+
+button {
+  padding: 15px 25px;
+  font-size: 22px;
+  border-radius: 12px;
+  border: none;
+  cursor: pointer;
+  margin: 10px;
+  transition: 0.3s;
+}
+
+#yesBtn {
+  background-color: #ff4d6d;
+  color: white;
+}
+
+#noBtn {
+  background-color: #cccccc;
+  position: relative;
+}
+</style>
+</head>
+
+<body>
+
+<h1>Will you be my Valentine? ❤️</h1>
+
+<button id="yesBtn" onclick="growYes()">Yes 💖</button>
+<button id="noBtn" onclick="moveNo()">No</button>
+
+<script>
+let size = 22;
+
+function growYes() {
+  size += 8;
+  document.getElementById("yesBtn").style.fontSize = size + "px";
+
+  if (size > 60) {
+    document.body.innerHTML = "<h1>YAYYY 💘 You're officially my Valentine!</h1>";
+  }
+}
+
+function moveNo() {
+  let btn = document.getElementById("noBtn");
+  btn.style.position = "absolute";
+  btn.style.top = Math.random() * window.innerHeight + "px";
+  btn.style.left = Math.random() * window.innerWidth + "px";
+}
+</script>
+
+</body>
+</html>
