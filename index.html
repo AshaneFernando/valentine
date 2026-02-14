@@ -6,82 +6,82 @@
 <title>Be My Valentine?</title>
 
 <style>
-    body {
-        margin: 0;
-        height: 100vh;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-family: 'Segoe UI', sans-serif;
-        background: linear-gradient(135deg, #ff758c, #ff7eb3, #ffb199);
-        overflow: hidden;
-        text-align: center;
-    }
+body {
+    margin: 0;
+    height: 100vh;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3, #ffb199);
+    overflow: hidden;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-    .container {
-        background: rgba(0, 0, 0, 0.35);
-        backdrop-filter: blur(15px);
-        padding: 50px;
-        border-radius: 25px;
-        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-        color: white;
-        width: 500px;
-        position: relative;
-        z-index: 1;
-    }
+.container {
+    background: rgba(0, 0, 0, 0.35);
+    backdrop-filter: blur(15px);
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+    color: white;
+    width: 90%;
+    max-width: 500px;
+    position: relative;
+    z-index: 1;
+}
 
-    h1 {
-        font-size: 42px;
-        margin-bottom: 25px;
-        text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
-    }
+h1 {
+    font-size: 6vw;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
+}
 
-    .buttons {
-        margin-top: 20px;
-        position: relative;
-        height: 180px;
-    }
-
+.buttons {
+    margin-top: 20px;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 15px;
+}
 
 button {
-    padding: 16px 30px;
-    font-size: 20px;
+    padding: 14px 25px;
+    font-size: 4vw;
     font-weight: bold;
     border: none;
     border-radius: 40px;
     cursor: pointer;
-    transition: 0.3s ease;
-    /* remove absolute positioning for mobile-friendly layout */
+    transition: 0.3s ease, transform 0.3s ease;
     position: relative;
 }
 
-/* Responsive adjustments */
-@media (max-width: 500px) {
-    .container {
-        width: 90%;
-        padding: 30px;
-    }
-    button {
-        font-size: 18px;
-        padding: 14px 25px;
-    }
-    #message {
-        font-size: 22px;
-        margin-top: 150px;
-    }
-    h1 {
-        font-size: 32px;
-    }
+#yesBtn {
+    background-color: #ff2e63;
+    color: white;
 }
 
+#noBtn {
+    background-color: white;
+    color: #ff2e63;
+}
+
+#message {
+    margin-top: 40px;
+    font-size: 5vw;
+    min-height: 60px;
+    text-shadow: 2px 2px 15px rgba(0,0,0,0.8);
+}
+
+/* Celebration */
 .celebration-message {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%) scale(0);
-    font-size: 10vw; /* responsive font size based on screen width */
+    font-size: clamp(24px, 10vw, 80px);
     font-weight: bold;
-    color: #FFD700; /* gold */
+    color: #FFD700;
     text-align: center;
     white-space: pre-line;
     text-shadow: 4px 4px 20px #FF69B4, 2px 2px 15px #FF1493;
@@ -89,51 +89,40 @@ button {
     z-index: 1000;
 }
 
-/* Optional: adjust for very small screens */
-@media (max-width: 400px) {
-    .celebration-message {
-        font-size: 14vw;
-    }
+@keyframes popAndGlow {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+    50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+    70% { transform: translate(-50%, -50%) scale(0.9); }
+    100% { transform: translate(-50%, -50%) scale(1); }
 }
 
-    @keyframes popAndGlow {
-        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-        50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
-        70% { transform: translate(-50%, -50%) scale(0.9); }
-        100% { transform: translate(-50%, -50%) scale(1); }
-    }
+@keyframes pulse {
+    0% { text-shadow: 4px 4px 20px #FF69B4, 2px 2px 15px #FF1493; }
+    100% { text-shadow: 0 0 40px #FFD700, 0 0 60px #FF1493, 0 0 80px #FF69B4; }
+}
 
-    @keyframes pulse {
-        0% { text-shadow: 4px 4px 20px #FF69B4, 2px 2px 15px #FF1493; }
-        100% { text-shadow: 0 0 40px #FFD700, 0 0 60px #FF1493, 0 0 80px #FF69B4; }
-    }
+.heart {
+    position: absolute;
+    color: #ff69b4;
+    animation: float 6s linear infinite;
+    font-size: 25px;
+    z-index: 500;
+}
 
-    /* Hearts */
-    .heart {
-        position: absolute;
-        color: #ff69b4;
-        animation: float 6s linear infinite;
-        font-size: 25px;
-        z-index: 500;
-    }
-
-    @keyframes float {
-        from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
-        to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
-    }
+@keyframes float {
+    from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+    to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
+}
 </style>
 </head>
-
 <body>
 
 <div class="container">
     <h1 id="title">Will You Be My Valentine? 💖</h1>
-    
     <div class="buttons" id="buttonArea">
         <button id="yesBtn">YES 💕</button>
         <button id="noBtn">NO 😏</button>
     </div>
-
     <div id="message"></div>
 </div>
 
@@ -169,10 +158,9 @@ let noClickCount = 0;
 const yesBtn = document.getElementById("yesBtn");
 const noBtn = document.getElementById("noBtn");
 const message = document.getElementById("message");
-const buttonArea = document.getElementById("buttonArea");
-const title = document.getElementById("title");
+const container = document.querySelector('.container');
 
-yesBtn.addEventListener("click", function() {
+yesBtn.addEventListener("click", () => {
     if (yesIndex < yesQuotes.length) {
         message.innerText = yesQuotes[yesIndex];
         yesIndex++;
@@ -184,13 +172,12 @@ yesBtn.addEventListener("click", function() {
     }
 });
 
-noBtn.addEventListener("click", function() {
+noBtn.addEventListener("click", () => {
     if (noClickCount < noQuotes.length) {
         message.innerText = noQuotes[noClickCount];
     } else {
         message.innerText = "You’re committed to chaos.";
     }
-
     noClickCount++;
     moveNoButton();
 });
@@ -199,37 +186,31 @@ function moveNoButton() {
     const btnWidth = noBtn.offsetWidth;
     const btnHeight = noBtn.offsetHeight;
 
-    let maxX = window.innerWidth - btnWidth - 10;  // 10px margin
-    let maxY = window.innerHeight - btnHeight - 10;
+    // Constrain to container bounds
+    const rect = container.getBoundingClientRect();
+    const maxX = rect.width - btnWidth;
+    const maxY = rect.height - btnHeight;
 
-    // Random position
     const randomX = Math.random() * maxX;
     const randomY = Math.random() * maxY;
 
-    noBtn.style.left = randomX + "px";
-    noBtn.style.top = randomY + "px";
+    noBtn.style.position = 'absolute';
+    noBtn.style.left = randomX + 'px';
+    noBtn.style.top = randomY + 'px';
 }
 
-
 function triggerCelebration() {
-    // Remove buttons
     yesBtn.style.display = "none";
     noBtn.style.display = "none";
 
-    // Create big congratulation message
     const congrats = document.createElement("div");
     congrats.classList.add("celebration-message");
     congrats.innerText = "🎉 CONGRATULATIONS! 🎉\nYou Passed the Test! 💖";
     document.body.appendChild(congrats);
 
-    // Hearts explosion
-    for (let i = 0; i < 100; i++) {
-        createHearts();
-    }
-
-    // Keep creating random hearts periodically
+    for (let i = 0; i < 100; i++) createHearts();
     let heartInterval = setInterval(createHearts, 200);
-    setTimeout(() => clearInterval(heartInterval), 8000); // stop after 8 seconds
+    setTimeout(() => clearInterval(heartInterval), 8000);
 }
 
 function createHearts() {
@@ -240,14 +221,9 @@ function createHearts() {
     heart.style.fontSize = (Math.random() * 40 + 20) + "px";
     heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
     document.body.appendChild(heart);
-
-    setTimeout(() => {
-        heart.remove();
-    }, 6000);
+    setTimeout(() => heart.remove(), 6000);
 }
 </script>
 
 </body>
 </html>
-
-
