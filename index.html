@@ -196,15 +196,20 @@ noBtn.addEventListener("click", function() {
 });
 
 function moveNoButton() {
-    const maxX = buttonArea.clientWidth - noBtn.clientWidth;
-    const maxY = buttonArea.clientHeight - noBtn.clientHeight;
+    const btnWidth = noBtn.offsetWidth;
+    const btnHeight = noBtn.offsetHeight;
 
+    let maxX = window.innerWidth - btnWidth - 10;  // 10px margin
+    let maxY = window.innerHeight - btnHeight - 10;
+
+    // Random position
     const randomX = Math.random() * maxX;
     const randomY = Math.random() * maxY;
 
     noBtn.style.left = randomX + "px";
     noBtn.style.top = randomY + "px";
 }
+
 
 function triggerCelebration() {
     // Remove buttons
@@ -244,4 +249,5 @@ function createHearts() {
 
 </body>
 </html>
+
 
