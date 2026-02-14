@@ -42,54 +42,59 @@
         height: 180px;
     }
 
+
+button {
+    padding: 16px 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    transition: 0.3s ease;
+    /* remove absolute positioning for mobile-friendly layout */
+    position: relative;
+}
+
+/* Responsive adjustments */
+@media (max-width: 500px) {
+    .container {
+        width: 90%;
+        padding: 30px;
+    }
     button {
-        padding: 18px 35px;
-        font-size: 22px;
-        font-weight: bold;
-        border: none;
-        border-radius: 40px;
-        cursor: pointer;
-        transition: 0.3s ease;
-        position: absolute;
+        font-size: 18px;
+        padding: 14px 25px;
     }
-
-    #yesBtn {
-        background-color: #ff2e63;
-        color: white;
-        left: 20%;
-        top: 50px;
-    }
-
-    #noBtn {
-        background-color: white;
-        color: #ff2e63;
-        left: 60%;
-        top: 50px;
-    }
-
     #message {
-        margin-top: 200px;
-        font-size: 28px;
-        font-weight: bold;
-        min-height: 60px;
-        text-shadow: 2px 2px 15px rgba(0,0,0,0.8);
+        font-size: 22px;
+        margin-top: 150px;
     }
+    h1 {
+        font-size: 32px;
+    }
+}
 
-    /* CELEBRATION MESSAGE */
+.celebration-message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    font-size: 10vw; /* responsive font size based on screen width */
+    font-weight: bold;
+    color: #FFD700; /* gold */
+    text-align: center;
+    white-space: pre-line;
+    text-shadow: 4px 4px 20px #FF69B4, 2px 2px 15px #FF1493;
+    animation: popAndGlow 1s forwards, pulse 2s infinite alternate;
+    z-index: 1000;
+}
+
+/* Optional: adjust for very small screens */
+@media (max-width: 400px) {
     .celebration-message {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%) scale(0);
-        font-size: 64px;
-        font-weight: bold;
-        color: #FFD700; /* gold */
-        text-align: center;
-        white-space: pre-line;
-        text-shadow: 4px 4px 20px #FF69B4, 2px 2px 15px #FF1493;
-        animation: popAndGlow 1s forwards, pulse 2s infinite alternate;
-        z-index: 1000;
+        font-size: 14vw;
     }
+}
 
     @keyframes popAndGlow {
         0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
@@ -239,3 +244,4 @@ function createHearts() {
 
 </body>
 </html>
+
