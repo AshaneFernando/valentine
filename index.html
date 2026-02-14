@@ -27,6 +27,7 @@
         color: white;
         width: 500px;
         position: relative;
+        z-index: 1;
     }
 
     h1 {
@@ -74,26 +75,46 @@
         text-shadow: 2px 2px 15px rgba(0,0,0,0.8);
     }
 
-    .celebration {
-        font-size: 40px;
-        animation: pop 0.6s ease forwards;
+    /* CELEBRATION MESSAGE */
+    .celebration-message {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%) scale(0);
+        font-size: 64px;
+        font-weight: bold;
+        color: #FFD700; /* gold */
+        text-align: center;
+        white-space: pre-line;
+        text-shadow: 4px 4px 20px #FF69B4, 2px 2px 15px #FF1493;
+        animation: popAndGlow 1s forwards, pulse 2s infinite alternate;
+        z-index: 1000;
     }
 
-    @keyframes pop {
-        from { transform: scale(0); }
-        to { transform: scale(1); }
+    @keyframes popAndGlow {
+        0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+        50% { transform: translate(-50%, -50%) scale(1.3); opacity: 1; }
+        70% { transform: translate(-50%, -50%) scale(0.9); }
+        100% { transform: translate(-50%, -50%) scale(1); }
     }
 
+    @keyframes pulse {
+        0% { text-shadow: 4px 4px 20px #FF69B4, 2px 2px 15px #FF1493; }
+        100% { text-shadow: 0 0 40px #FFD700, 0 0 60px #FF1493, 0 0 80px #FF69B4; }
+    }
+
+    /* Hearts */
     .heart {
         position: absolute;
-        color: white;
+        color: #ff69b4;
         animation: float 6s linear infinite;
         font-size: 25px;
+        z-index: 500;
     }
 
     @keyframes float {
-        from { transform: translateY(100vh); opacity: 1; }
-        to { transform: translateY(-10vh); opacity: 0; }
+        from { transform: translateY(100vh) rotate(0deg); opacity: 1; }
+        to { transform: translateY(-10vh) rotate(360deg); opacity: 0; }
     }
 </style>
 </head>
@@ -147,15 +168,13 @@ const buttonArea = document.getElementById("buttonArea");
 const title = document.getElementById("title");
 
 yesBtn.addEventListener("click", function() {
-
     if (yesIndex < yesQuotes.length) {
         message.innerText = yesQuotes[yesIndex];
         yesIndex++;
         yesScale += 0.25;
         yesBtn.style.transform = `scale(${yesScale})`;
         createHearts();
-    } 
-    else {
+    } else {
         triggerCelebration();
     }
 });
@@ -183,16 +202,24 @@ function moveNoButton() {
 }
 
 function triggerCelebration() {
-    title.innerText = "CONGRATULATIONS 💍✨";
-    message.innerHTML = "You officially said YES you passed the test😌💖";
-    message.classList.add("celebration");
-
+    // Remove buttons
     yesBtn.style.display = "none";
     noBtn.style.display = "none";
 
-    for (let i = 0; i < 40; i++) {
+    // Create big congratulation message
+    const congrats = document.createElement("div");
+    congrats.classList.add("celebration-message");
+    congrats.innerText = "🎉 CONGRATULATIONS! 🎉\nYou Passed the Test! 💖";
+    document.body.appendChild(congrats);
+
+    // Hearts explosion
+    for (let i = 0; i < 100; i++) {
         createHearts();
     }
+
+    // Keep creating random hearts periodically
+    let heartInterval = setInterval(createHearts, 200);
+    setTimeout(() => clearInterval(heartInterval), 8000); // stop after 8 seconds
 }
 
 function createHearts() {
@@ -200,7 +227,7 @@ function createHearts() {
     heart.classList.add("heart");
     heart.innerHTML = "💖";
     heart.style.left = Math.random() * 100 + "vw";
-    heart.style.fontSize = (Math.random() * 30 + 20) + "px";
+    heart.style.fontSize = (Math.random() * 40 + 20) + "px";
     heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
     document.body.appendChild(heart);
 
