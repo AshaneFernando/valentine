@@ -1,67 +1,212 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Be My Valentine?</title>
 
 <style>
-body {
-  text-align: center;
-  font-family: Arial;
-  margin-top: 80px;
-  background: #ffe6f0;
-}
+    body {
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: 'Segoe UI', sans-serif;
+        background: linear-gradient(135deg, #ff758c, #ff7eb3, #ffb199);
+        overflow: hidden;
+        text-align: center;
+    }
 
-h1 {
-  font-size: 28px;
-}
+    .container {
+        background: rgba(0, 0, 0, 0.35);
+        backdrop-filter: blur(15px);
+        padding: 50px;
+        border-radius: 25px;
+        box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        color: white;
+        width: 500px;
+        position: relative;
+    }
 
-button {
-  padding: 15px 25px;
-  font-size: 22px;
-  border-radius: 12px;
-  border: none;
-  cursor: pointer;
-  margin: 10px;
-  transition: 0.3s;
-}
+    h1 {
+        font-size: 42px;
+        margin-bottom: 25px;
+        text-shadow: 2px 2px 12px rgba(0,0,0,0.7);
+    }
 
-#yesBtn {
-  background-color: #ff4d6d;
-  color: white;
-}
+    .buttons {
+        margin-top: 20px;
+        position: relative;
+        height: 180px;
+    }
 
-#noBtn {
-  background-color: #cccccc;
-  position: relative;
-}
+    button {
+        padding: 18px 35px;
+        font-size: 22px;
+        font-weight: bold;
+        border: none;
+        border-radius: 40px;
+        cursor: pointer;
+        transition: 0.3s ease;
+        position: absolute;
+    }
+
+    #yesBtn {
+        background-color: #ff2e63;
+        color: white;
+        left: 20%;
+        top: 50px;
+    }
+
+    #noBtn {
+        background-color: white;
+        color: #ff2e63;
+        left: 60%;
+        top: 50px;
+    }
+
+    #message {
+        margin-top: 200px;
+        font-size: 28px;
+        font-weight: bold;
+        min-height: 60px;
+        text-shadow: 2px 2px 15px rgba(0,0,0,0.8);
+    }
+
+    .celebration {
+        font-size: 40px;
+        animation: pop 0.6s ease forwards;
+    }
+
+    @keyframes pop {
+        from { transform: scale(0); }
+        to { transform: scale(1); }
+    }
+
+    .heart {
+        position: absolute;
+        color: white;
+        animation: float 6s linear infinite;
+        font-size: 25px;
+    }
+
+    @keyframes float {
+        from { transform: translateY(100vh); opacity: 1; }
+        to { transform: translateY(-10vh); opacity: 0; }
+    }
 </style>
 </head>
 
 <body>
 
-<h1>Will you be my Valentine? ❤️</h1>
+<div class="container">
+    <h1 id="title">Will You Be My Valentine? 💖</h1>
+    
+    <div class="buttons" id="buttonArea">
+        <button id="yesBtn">YES 💕</button>
+        <button id="noBtn">NO 😏</button>
+    </div>
 
-<button id="yesBtn" onclick="growYes()">Yes 💖</button>
-<button id="noBtn" onclick="moveNo()">No</button>
+    <div id="message"></div>
+</div>
 
 <script>
-let size = 22;
+const yesQuotes = [
+    "You chose wisely, darling.",
+    "Contract signed. No refunds.",
+    "Love subscription activated.",
+    "You’re stuck now.",
+    "Achievement unlocked: Me.",
+    "Marriage speedrun initiated.💕",
+    "I was hoping you’d say that. 😌",
+    "I knew it 😌.",
+    "You passed the test.💖"
+];
 
-function growYes() {
-  size += 8;
-  document.getElementById("yesBtn").style.fontSize = size + "px";
+const noQuotes = [
+    "That’s suspicious behavior.",
+    "Wrong answer detected.",
+    "Incorrect. Try again.",
+    "Be serious right now.",
+    "You misclicked. Obviously.",
+    "Are you suuuure? Try again… I’ll wait. 😌",
+    "Error 404: ‘No’ not found.",
+    "Denied. Try again",
+    "System error: Nope"
+];
 
-  if (size > 60) {
-    document.body.innerHTML = "<h1>YAYYY 💘 You're officially my Valentine!</h1>";
-  }
+let yesScale = 1;
+let yesIndex = 0;
+let noClickCount = 0;
+
+const yesBtn = document.getElementById("yesBtn");
+const noBtn = document.getElementById("noBtn");
+const message = document.getElementById("message");
+const buttonArea = document.getElementById("buttonArea");
+const title = document.getElementById("title");
+
+yesBtn.addEventListener("click", function() {
+
+    if (yesIndex < yesQuotes.length) {
+        message.innerText = yesQuotes[yesIndex];
+        yesIndex++;
+        yesScale += 0.25;
+        yesBtn.style.transform = `scale(${yesScale})`;
+        createHearts();
+    } 
+    else {
+        triggerCelebration();
+    }
+});
+
+noBtn.addEventListener("click", function() {
+    if (noClickCount < noQuotes.length) {
+        message.innerText = noQuotes[noClickCount];
+    } else {
+        message.innerText = "You’re committed to chaos.";
+    }
+
+    noClickCount++;
+    moveNoButton();
+});
+
+function moveNoButton() {
+    const maxX = buttonArea.clientWidth - noBtn.clientWidth;
+    const maxY = buttonArea.clientHeight - noBtn.clientHeight;
+
+    const randomX = Math.random() * maxX;
+    const randomY = Math.random() * maxY;
+
+    noBtn.style.left = randomX + "px";
+    noBtn.style.top = randomY + "px";
 }
 
-function moveNo() {
-  let btn = document.getElementById("noBtn");
-  btn.style.position = "absolute";
-  btn.style.top = Math.random() * window.innerHeight + "px";
-  btn.style.left = Math.random() * window.innerWidth + "px";
+function triggerCelebration() {
+    title.innerText = "CONGRATULATIONS 💍✨";
+    message.innerHTML = "You officially said YES you passed the test😌💖";
+    message.classList.add("celebration");
+
+    yesBtn.style.display = "none";
+    noBtn.style.display = "none";
+
+    for (let i = 0; i < 40; i++) {
+        createHearts();
+    }
+}
+
+function createHearts() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "💖";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = (Math.random() * 30 + 20) + "px";
+    heart.style.animationDuration = (Math.random() * 3 + 3) + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+        heart.remove();
+    }, 6000);
 }
 </script>
 
